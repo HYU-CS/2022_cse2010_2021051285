@@ -1,0 +1,94 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build without ASAN:C/C++",
+            "type": "shell",
+            "command": "%BUILD%",
+            "args": [
+                "/Zi", // 완전한 디버깅 정보를 생성합니다.
+                "/EHc", // extern "C" 기본값은 nothrow입니다.
+                "/EHs", // C++ 예외 처리를 사용하도록 설정합니다(SEH 예외 없음).
+                "/nologo", // nologo
+                "/Fe:", // 실행 파일 이름을 바꿉니다.
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "/Fo:", // 개체 파일을 만듭니다.
+                "${fileDirname}\\",
+                "/source-charset:utf-8",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PATH": "${env:PATH};C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools",
+                    "BUILD": "chcp 65001 >nul && VsDevCmd.bat -arch=x64 -host_arch=x64 -no_logo >nul && cl.exe"
+                },
+                "shell": {
+                    "executable": "cmd",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "detail": "BUILD WITHOUT ASAN"
+        },
+        {
+            "label": "Build with ASAN:C/C++",
+            "type": "shell",
+            "command": "%BUILD%",
+            "args": [
+                "/fsanitize=address", // AddressSanitizer와 같은 소독기 계측을 컴파일할 수 있습니다.
+                "/Zi", // 완전한 디버깅 정보를 생성합니다.
+                "/EHc", // extern "C" 기본값은 nothrow입니다.
+                "/EHs", // C++ 예외 처리를 사용하도록 설정합니다(SEH 예외 없음).
+                "/nologo", // nologo
+                "/Fe:", // 실행 파일 이름을 바꿉니다.
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "/Fo:", // 개체 파일을 만듭니다.
+                "${fileDirname}\\",
+                "/source-charset:utf-8",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PATH": "${env:PATH};C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools",
+                    "BUILD": "chcp 65001 >nul && VsDevCmd.bat -arch=x64 -host_arch=x64 -no_logo && cl.exe"
+                },
+                "shell": {
+                    "executable": "cmd",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "group": {
+                "kind": "build",
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "detail": "BUILD WITH ASAN"
+        },
+        {
+            "label": "Execute:C/C++",
+            "command": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "detail": "EXECUTE"
+        }
+    ]
+}
