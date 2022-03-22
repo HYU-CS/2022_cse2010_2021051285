@@ -8,7 +8,7 @@ int main(void)
     printf("원판의 개수를 입력하시오: ");
     scanf("%d", &n);
 
-    int count;
+    int count = 0;
 
     hanoi(n, 'A', 'B', 'C', &count);
 
