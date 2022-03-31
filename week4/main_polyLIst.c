@@ -138,25 +138,11 @@ void printPoly_impl(Poly A, char* buffer)
         return;
     }
 
-    buffer += sprintf(buffer, (node->coef < 0) ? "-" : "");
-    if(node->exp == 0 || (node->coef != 1 && node->coef != -1))
-    {
-        buffer += sprintf(buffer, "%d", node->coef);
-    }
-    if(node->exp != 0)
-    {
-        buffer += sprintf(buffer, "x");
-        if(node->exp != 1)
-        {
-            buffer += sprintf(buffer, "^%d", node->exp);
-        }
-    }
-
-    node = node->next;
+    char *plusSign = "";
 
     while(node != NULL)
     {
-        buffer += sprintf(buffer, (node->coef < 0) ? "-" : "+");
+        buffer += sprintf(buffer, (node->coef < 0) ? "-" : plusSign);
 
         if(node->exp == 0 || (node->coef != 1 && node->coef != -1))
         {
@@ -172,6 +158,7 @@ void printPoly_impl(Poly A, char* buffer)
             }
         }
 
+        plusSign = "+";
         node = node->next;
     }
 }
@@ -191,8 +178,8 @@ int main(void)
     initPoly(&A);
     initPoly(&B);
     
-    addTerm(&A, 1, -1);
-    addTerm(&A, 0, -1);
+    addTerm(&A, 1, 1);
+    addTerm(&A, 0, 1);
     printf("poly A: ");
     printPoly(A);
     printf("\n");
