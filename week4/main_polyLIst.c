@@ -31,18 +31,20 @@ struct Poly
     Node startNode;
 };
 
-Poly createEmptyPoly(void)
+void initPoly(Poly *poly)
 {
-    return (Poly){0, (Node){0, 0, NULL}};
+    poly->size = 0;
+    poly->startNode = (Node){0, 0, NULL};
 }
 
 void clearPoly(Poly *poly)
 {
     Node *cursor = poly->startNode.next;
+    Node *temp = NULL;
 
     while(cursor != NULL)
     {
-        Node *temp = cursor->next;
+        temp = cursor->next;
         free(cursor);
         cursor = temp;
     }
@@ -102,7 +104,8 @@ void addTerm(Poly *poly, Exponent exp, Coefficient coef)
 
 Poly multiPoly(Poly lhs, Poly rhs)
 {
-    Poly retPoly = createEmptyPoly();
+    Poly retPoly;
+    initPoly(&retPoly);
 
     const Node *lhsNode = lhs.startNode.next;
 
@@ -184,8 +187,8 @@ void printPoly(Poly A)
 int main(void)
 {
     Poly A, B;
-    A = createEmptyPoly();
-    B = createEmptyPoly();
+    initPoly(&A);
+    initPoly(&B);
     
     addTerm(&A, 1, 1);
     addTerm(&A, 0, 1);
