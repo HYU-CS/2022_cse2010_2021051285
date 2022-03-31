@@ -138,6 +138,7 @@ void printPoly_impl(Poly A, char* buffer)
         return;
     }
 
+    buffer += sprintf(buffer, (node->coef < 0) ? "-" : "");
     if(node->exp == 0 || (node->coef != 1 && node->coef != -1))
     {
         buffer += sprintf(buffer, "%d", node->coef);
@@ -190,8 +191,8 @@ int main(void)
     initPoly(&A);
     initPoly(&B);
     
-    addTerm(&A, 1, 1);
-    addTerm(&A, 0, 1);
+    addTerm(&A, 1, -1);
+    addTerm(&A, 0, -1);
     printf("poly A: ");
     printPoly(A);
     printf("\n");
