@@ -62,7 +62,7 @@ BTNode *BTInsert(BTNode *root, int key)
         root->keys[pos] = key;
         root->n += 1;
 
-        if(root->n == M_WAY)
+        if(root->n == M_WAY && root->isRoot)
         {
             return splitChild(root);
         }
@@ -92,13 +92,14 @@ BTNode *BTInsert(BTNode *root, int key)
             }
 
             root->keys[pos] = split->keys[0];
+            root->n += 1;
             root->childs[pos] = split->childs[0];
             root->childs[pos + 1] = split->childs[1];
 
             free(split);
         }
 
-        if(root->n == M_WAY)
+        if(root->n == M_WAY && root->isRoot)
         {
             return splitChild(root);
         }
@@ -136,7 +137,7 @@ BTNode *splitChild(BTNode *root)
 
         root->childs[i] = NULL;
         root->keys[i] = 0;
-        root->n--;
+        root->n -= 1;
     }
 
     newSibling->childs[i - mid - 1] = root->childs[i];
