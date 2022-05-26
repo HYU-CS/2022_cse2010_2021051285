@@ -58,8 +58,8 @@ void addHashTable(Element item, Element *hashTable)
     {
         if(equal(item, hashTable[i]))
         {
-            puts("해당하는 키가 이미 존재합니다.");
-            exit(EXIT_FAILURE);
+            puts("중복 삽입 에러");
+            return;
         }
 
         i = (i + 1) % TABLE_SIZE;

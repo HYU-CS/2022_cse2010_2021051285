@@ -61,8 +61,8 @@ void addHashTable(Element item, ListNode **hashTable)
     {
         if(equal(item, cursor->item))
         {
-            puts("이미 존재하는 값입니다.");
-            exit(EXIT_FAILURE);
+            puts("중복 삽입 에러");
+            return;
         }
     }
 
