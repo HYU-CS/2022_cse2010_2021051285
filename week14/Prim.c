@@ -57,7 +57,16 @@ void prim(int s, int n)
         int u = getMinVertex(n);
         selected[u] = TRUE;
 
-        printf("%d -> ", u);
+        if(u == s)
+        {
+            printf("%d", u);
+        }
+        else
+        {
+
+            printf(" -> %d", u);
+        }
+
         for(int v = 0; v < n; v++)
         {
             if(graph[u][v] != INF)

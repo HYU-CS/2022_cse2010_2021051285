@@ -114,12 +114,19 @@ void bfs(Graph *g, int v)
 
     while(!isEmpty(&q))
     {
-        v = dequeue(&q);
-        printf("%d -> ", v);
+        int w = dequeue(&q);
+        if(w == v)
+        {
+            printf("%d", w);
+        }
+        else
+        {
+            printf(" -> %d", w);
+        }
 
         for(int i = 0; i < g->n; i++)
         {
-            if(visited[i] == TRUE || g->adjMatrix[v][i] == 0)
+            if(visited[i] == TRUE || g->adjMatrix[w][i] == 0)
             {
                 continue;
             }
